@@ -2,13 +2,20 @@
     "version": 2,
       "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/index.php": { "runtime": "vercel-php@0.6.1" }
     },
-    "routes": [{
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/public/build/"
+        },
+        {
         "src": "/(.*)",
         "dest": "/api/index.php"
-    }],
+        }
+    ],
     "env": {
+        "APP_NAME": "Sendnotes",
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_URL": "https://sendnotes.vercel.app",
