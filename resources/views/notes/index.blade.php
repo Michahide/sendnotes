@@ -41,7 +41,7 @@
                             </div>
                         @endforeach
                     </div> --}}
-                    <livewire:notes.show-notes />
+                    <livewire:notes.show-notes lazy />
                 </div>
             {{-- </div> --}}
         </div>
