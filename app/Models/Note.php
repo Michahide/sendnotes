@@ -16,10 +16,9 @@ class Note extends Model
         // 'updated_at',
     ];
 
-    // protected $casts = [
-    //     'send_date' => 'date',
-    //     'is_published' => 'boolean',
-    // ];
+    protected $casts = [
+        'is_published' => 'boolean',
+    ];
 
     public function user()
     {
