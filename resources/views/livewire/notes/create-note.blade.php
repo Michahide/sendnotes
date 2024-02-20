@@ -7,6 +7,7 @@ new class extends Component {
     public $noteBody;
     public $noteRecipient;
     public $noteSendDate;
+    public $noteIsPublished;
 
     public function submit()
     {
@@ -25,7 +26,7 @@ new class extends Component {
                 'body' => $this->noteBody,
                 'recipient' => $this->noteRecipient,
                 'send_date' => $this->noteSendDate,
-                'is_published' => false, //default value for new notes.
+                'is_published' => true, //default value for new notes.
             ]);
 
         redirect()->route('notes.index');
