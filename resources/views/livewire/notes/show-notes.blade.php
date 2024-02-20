@@ -62,14 +62,16 @@ new class extends Component {
         $this->emit('noteDeleted');
     }
 */
-    /*    public function deleteNote($noteId)
+  public function deleteNote($noteId)
     {
         Auth::user()
             ->notes()
             ->where('id', $noteId)
             ->delete();
+        
+        /* $note = Note::where('id', $noteId)->first();
+        $note->delete(); */
     }
-*/
 }; ?>
 
 <div>
@@ -79,16 +81,27 @@ new class extends Component {
             <div class="text-center">
                 <h1 class="text-lg font-semibold leading-tight text-gray-800">No notes found</h1>
                 <p class="mt-1 text-sm text-gray-600">Let's create your first note to send.</p>
-                <x-button primary icon-right="plus" class="mt-6" href="{{ route('notes.create') }}" wire:navigate>Create a Note</x-button>
+                <x-button primary icon-right="plus" class="mt-6" href="{{ route('notes.create') }}" wire:navigate>Create
+                    a Note</x-button>
             </div>
         @else
+            <div class="flex justify-end">
+                <x-button primary icon-right="plus" class="mt-6 mb-4" href="{{ route('notes.create') }}"
+                    wire:navigate>Create
+                    a Note</x-button>
+            </div>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 @foreach ($notes as $note)
                     <x-card>
                         <div class="flex justify-between">
-                            <a href="#" class="text-xl font bold hover:underline hover:text-blue-600">
-                                {{ $note->title }}
-                            </a>
+                            <div>
+                                <a href="#" class="text-xl font bold hover:underline hover:text-blue-600">
+                                    {{ $note->title }}
+                                </a>
+                                <p class="text-xs mt-2 text-gray-600">
+                                    {{ Str::limit($note->body, 100)}}
+                                </p>
+                            </div>
                             <div class="text-xs text-gray-500">
                                 {{ \Carbon\Carbon::parse($note->send_date)->format('d M Y') }}
                             </div>
@@ -103,7 +116,7 @@ new class extends Component {
                             <div>
                                 <x-button.circle icon="eye"></x-button.circle>
                                 <x-button.circle icon="trash"
-                                    wire:click="deleteNote({{ $note->id }})"></x-button.circle>
+                                    wire:click="deleteNote('{{ $note->id }}')"></x-button.circle>
                             </div>
                         </div>
                     </x-card>
