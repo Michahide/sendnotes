@@ -42,4 +42,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    public function publishedNotes(User $user)
+    {
+        return $this->where('user_id', $user->id)
+            ->where('is_published', true)
+            ->get();
+    }
+
+    // Whoever the user, they can create a note
+    // auth()->user()->notes()->create([
+    //   "title" => request("title"),
+    //     "body" => request("body"),
+    // ]);
 }
