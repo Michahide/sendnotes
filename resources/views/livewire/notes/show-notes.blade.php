@@ -26,24 +26,6 @@ new class extends Component {
         ];
     }
 */
-    // protected $listeners = ['noteDeleted']; // Add this line
-
-    /*    public function with(): array
-    {
-        return[
-            'title' => 'Show Notes',
-        ];
-    }
-*/
-    /*    public function with(): array
-    {
-        return [
-            'notes' => \App\Models\Note::all()
-                ->where('user_id', auth()->user()->id)
-                ->sortByDesc('updated_at'),
-        ];
-    }
-*/
 
     public function with(): array
     {
@@ -52,25 +34,11 @@ new class extends Component {
         ];
     }
 
-    /*
     public function deleteNote($noteId)
     {
-        // $this->notes = $this->notes->filter(function ($note) use ($noteId) {
-        //     return $note['id'] !== $noteId;
-        // });
-        \App\Models\Note::find($noteId)->delete();
-        $this->emit('noteDeleted');
-    }
-*/
-  public function deleteNote($noteId)
-    {
-        Auth::user()
-            ->notes()
-            ->where('id', $noteId)
-            ->delete();
-        
-        /* $note = Note::where('id', $noteId)->first();
-        $note->delete(); */
+        $note = \App\Models\Note::find($noteId);
+        $this->authorize('delete', $note);
+        $note->delete();
     }
 }; ?>
 
@@ -99,7 +67,7 @@ new class extends Component {
                                     {{ $note->title }}
                                 </a>
                                 <p class="text-xs mt-2 text-gray-600">
-                                    {{ Str::limit($note->body, 100)}}
+                                    {{ Str::limit($note->body, 100) }}
                                 </p>
                             </div>
                             <div class="text-xs text-gray-500">
@@ -114,7 +82,10 @@ new class extends Component {
                                 </span>
                             </p>
                             <div>
-                                <x-button.circle icon="eye"></x-button.circle>
+                                {{-- Passing all data about note --}}
+                                <x-button.circle icon="eye"
+                                    href="{{ route('notes.edit', $note) }}"></x-button.circle>
+                                {{-- Delete note --}}
                                 <x-button.circle icon="trash"
                                     wire:click="deleteNote('{{ $note->id }}')"></x-button.circle>
                             </div>
