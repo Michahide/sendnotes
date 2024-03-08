@@ -48,6 +48,5 @@ new class extends Component {
             placeholder="Your friend email" />
         <x-input icon="calendar" wire:model="noteSendDate" type="date" label="Send Date" />
         <x-button wire:click="submit" primary right-icon="calendar" spinner>Schedule Note</x-button>
-        <x-errors />
     </form>
 </div>
